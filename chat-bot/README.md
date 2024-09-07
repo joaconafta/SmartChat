@@ -6,17 +6,12 @@ This project is generated using the [MessageKit](https://message-kit.vercel.app)
 
 Follow these steps to set up and run the project:
 
-1. **Navigate to the project directory:**
-    ```sh
-    cd ./smart-chat-bot
-    ```
-
-2. **Install dependencies:**
+1. **Install dependencies:**
     ```sh
     npm install
     ```
 
-3. **Run the project:**
+2. **Run the project:**
     ```sh
     npm dev
     ```
@@ -32,6 +27,4 @@ REDIS_CONNECTION_STRING= # redis db connection string
 MSG_LOG=true # logs the message on the console
 ```
 
-Para levantar el redis local instando docker y tirando un docker compose up ya te queda.
----
-Made with ❤️ by [Ephemera](https://ephemerahq.com)
+To set up a local Redis instance, install Docker and run 'docker compose up', and you're all set.
