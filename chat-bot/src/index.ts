@@ -20,7 +20,7 @@ run(async (context: HandlerContext) => {
       sender,
     },
   } = context;
-  console.log(sender);
+
   if (!clientInitialized) {
     startCron(redisClient, v2client);
     clientInitialized = true;

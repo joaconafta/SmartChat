@@ -28,7 +28,7 @@ export async function startCron(redisClient: RedisClientType, v2client: Client) 
           );
           if (targetConversation)
             await targetConversation.send(`Here is your daily update! \nBTC: ${btcPrice} \nETH: ${ethPrice} \nUSDC APY (Aave): ${aaveUsdcAPY}`);
-            // await targetConversation.send(`Here is your daily update! \nBTC: ${btcPrice} \nETH: ${ethPrice} \nAave: ${aaveYield} \nUniswap: ${uniswapYield}`);
+            await targetConversation.send(`https://smart-chat-three.vercel.app/`);
           } catch (error) {
             console.error(`Failed to send daily update to ${address}:`, error);
           }
