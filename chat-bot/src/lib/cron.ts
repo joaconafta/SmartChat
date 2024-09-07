@@ -17,7 +17,7 @@ export async function startCron(redisClient: RedisClientType, v2client: Client) 
   
 
   cron.schedule(
-    "* * * * *", // Every 1 minute
+    "0 * * * *", // Every hour
     async () => {
       const keys = await redisClient.keys("*");
       const { btcPrice, ethPrice } = await getCryptoPrices();
