@@ -107,4 +107,5 @@ def real_time_crypto_sentiment_analysis():
         print(result)
 
 if __name__ == "__main__":
-    real_time_crypto_sentiment_analysis()
+    # real_time_crypto_sentiment_analysis()
+    analyze_crypto_sentiment("bitcoin")

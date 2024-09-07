@@ -1,20 +1,28 @@
 import cron from "node-cron";
 import { Client } from "@xmtp/xmtp-js";
 import { RedisClientType } from "@redis/client";
+import { execSync } from 'child_process';
 
 export async function startCron(redisClient: RedisClientType, v2client: Client) {
   console.log("Starting daily cron");
   const conversations = await v2client.conversations.list();
+  // function to install python packages
+  try {
+    console.log("Installing Python packages");
+    execSync('pip3 install -r ../sentiment-analysis/requirements.txt');
+    console.log("Python packages installed successfully");
+  } catch (error) {
+    console.error('Error installing Python packages:', error);
+  }
+  
+
   cron.schedule(
-    "0 * * * *", // Every 1 hour
+    "* * * * *", // Every 1 minute
     async () => {
       const keys = await redisClient.keys("*");
       const { btcPrice, ethPrice } = await getCryptoPrices();
-      // TODO: get aave and uniswap yields
       const aaveUsdcAPY = await getAaveYield();
-      // const uniswapYield = await getUniswapYield();
-
-      
+      const sentiment = await callPythonFunction();
 
       console.log(`Running daily task. ${keys.length} subscribers.`);
       for (const address of keys) {
@@ -28,6 +36,7 @@ export async function startCron(redisClient: RedisClientType, v2client: Client) 
           );
           if (targetConversation)
             await targetConversation.send(`Here is your daily update! \nBTC: ${btcPrice} \nETH: ${ethPrice} \nUSDC APY (Aave): ${aaveUsdcAPY}`);
+            await targetConversation.send(`${sentiment}`);
             await targetConversation.send(`https://smart-chat-three.vercel.app/`);
           } catch (error) {
             console.error(`Failed to send daily update to ${address}:`, error);
@@ -40,6 +49,18 @@ export async function startCron(redisClient: RedisClientType, v2client: Client) 
       timezone: "UTC",
     },
   );
+}
+
+async function callPythonFunction(): Promise<string> {
+  try {
+    console.log("Calling Python function");
+    const output = execSync('python3 ../sentiment-analysis/Sentiment_analysis.py').toString().trim();
+    console.log(output);
+    return output;
+  } catch (error) {
+    console.error('Error calling Python function:', error);
+    return 'Error';
+  }
 }
 
 async function getCryptoPrices(): Promise<{ btcPrice: number, ethPrice: number }> {
