@@ -22,6 +22,7 @@ run(async (context: HandlerContext) => {
   } = context;
 
   if (!clientInitialized) {
+    // @ts-ignore
     startCron(redisClient, v2client);
     clientInitialized = true;
   }

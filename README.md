@@ -1,5 +1,9 @@
 # SmartChat
 
+## Deployed Demo
+
+Listening on `0xd9372631853723186F8d4FA192f79331eE7b61bD`
+
 ## Description
 
 SmartChat is an all-in-one project that keeps crypto enthusiasts informed with real-time market data, sentiment analysis, and convenient swap functionality. It consists of three main components:

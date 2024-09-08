@@ -17,7 +17,7 @@ export async function startCron(redisClient: RedisClientType, v2client: Client) 
   
 
   cron.schedule(
-    "0 * * * *", // Every hour
+    "* * * * *", // Every minute
     async () => {
       const keys = await redisClient.keys("*");
       const { btcPrice, ethPrice } = await getCryptoPrices();
@@ -32,12 +32,12 @@ export async function startCron(redisClient: RedisClientType, v2client: Client) 
           // Logic to send daily updates to each subscriber
           try {
           const targetConversation = conversations.find(
-            (conv) => conv.peerAddress === address,
+            (conv: { peerAddress: string; }) => conv.peerAddress === address,
           );
           if (targetConversation)
-            await targetConversation.send(`Here is your daily update! \nBTC: ${btcPrice} \nETH: ${ethPrice} \nUSDC APY (Aave): ${aaveUsdcAPY}`);
-            await targetConversation.send(`${sentiment}`);
-            await targetConversation.send(`https://smart-chat-three.vercel.app/`);
+            await targetConversation!.send(`Here is your daily update! \nBTC: ${btcPrice} \nETH: ${ethPrice} \nUSDC APY (Aave): ${aaveUsdcAPY}`);
+            await targetConversation!.send(`${sentiment}`);
+            await targetConversation!.send(`https://smart-chat-three.vercel.app/`);
           } catch (error) {
             console.error(`Failed to send daily update to ${address}:`, error);
           }

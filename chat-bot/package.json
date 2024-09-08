@@ -12,6 +12,7 @@
     "@redis/client": "^1.5.16",
     "@xmtp/message-kit": "latest",
     "@xmtp/redis-persistence": "^0.0.4",
+    "@xmtp/xmtp-js": "^13.0.0",
     "node-cron": "^3.0.3"
   },
   "devDependencies": {
